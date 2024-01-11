@@ -14,46 +14,40 @@ let highscore = 0;
 const displayMessage = function (message) {
   messageEl.textContent = message;
 };
-//document.querySelector(".number").textContent = secretNumber;
+
 check.addEventListener("click", function () {
-  const guess = Number(guess.value);
-  console.log(guess, typeof guess);
-  //when there is no input
-  if (!guess) {
-    //document.querySelector(".message").textContent = "⛔ No number entered!";
+  const guessValue = Number(guess.value);
+  console.log(guessValue, typeof guessValue);
+
+  if (!guessValue) {
     displayMessage("⛔ No number entered!");
-    //when player wins
-  } else if (guess === secretNumber) {
-    //document.querySelector(".message").textContent = "🎉 correct number";
-    displayMessage("🎉 correct number");
+  } else if (guessValue === secretNumber) {
+    displayMessage("🎉 Correct number");
     number.textContent = secretNumber;
 
     body.style.backgroundColor = "#60b347";
     number.style.width = "30rem";
     if (score > highscore) {
-      highscoreEl = score;
-      highscore.textContent = highscore;
+      highscore = score; // Corrected this line
+      highscoreEl.textContent = highscore; // Updated the highscore element
     }
-  } else if (guess !== secretNumber) {
+  } else if (guessValue !== secretNumber) {
     if (score > 1) {
-      //document.querySelector(".message").textContent =
-      displayMessage(guess > secretNumber ? "📈Too high " : "📉 Too low");
+      displayMessage(guessValue > secretNumber ? "📈 Too high " : "📉 Too low");
       score--;
       scoreEl.textContent = score;
     } else {
-      //document.querySelector(".message").textContent = "💥  You lost the game ";
       displayMessage("💥  You lost the game ");
       scoreEl.textContent = 0;
     }
   }
 });
+
 againEl.addEventListener("click", function () {
   score = 20;
-
   scoreEl.textContent = score;
   secretNumber = Math.trunc(Math.random() * 20) + 1;
   number.textContent = "?";
-  //document.querySelector(".message").textContent = "Start guesing...";
   displayMessage("Start guessing...");
   body.style.backgroundColor = "#222";
   number.style.width = "15rem";
